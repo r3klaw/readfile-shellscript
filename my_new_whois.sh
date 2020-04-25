@@ -1,40 +1,40 @@
 #!/bin/sh
-echo $USER
+echo "user: "$USER
 
 var=$(date +"%FORMAT_STRING")
 now=$(date +"%m_%d_%Y_%H_%M_%S")
-printf "%s\n" $now
-today=$(date +"%Y_%m_%d_%H_%M_%S")
+echo "date:" $now
+timestamp=$(date +"%Y_%m_%d_%H_%M_%S")
 
-options=(
-    'people'
-    'inetnum'
+choices=(
     'netname'
+    'inetnum'
+    'people'
     'quit'
 )
 
-PS3="Please choose an option: "
-select option in "${options[@]}" ; do
-    [[ -n $option ]] 
+PS3="Please choose an option between 1-4: "
+select choice in "${choices[@]}" ; do
+    [[ -n $choice ]] 
         echo "invalid input"
     
-    case $option in
-        people) 
-            read -p "Enter your search: "  search
-            echo "Search results for: $search "
-            sort whois_yahoo_mnt.txt | grep "$search"
-            grep "$search" whois_yahoo_mnt.txt > ${option}_${today}.txt
-            echo ${today} >> ${option}_${today}.txt;;
+    case $choice in
+        netname) 
+            sort whois_yahoo_mnt.txt | grep "netname"
+            sort whois_yahoo_mnt.txt | grep "netname"  > ${choice}_${timestamp}.txt
+            echo ${timestamp} >> ${choice}_${timestamp}.txt;;  
         inetnum) 
             sort -V whois_yahoo_mnt.txt | grep "inetnum"
-            sort -V whois_yahoo_mnt.txt | grep "inetnum"  > ${option}_${today}.txt
-            echo ${today} >> ${option}_${today}.txt;;
-            netname) 
-            sort whois_yahoo_mnt.txt | grep "netname"
-            sort whois_yahoo_mnt.txt | grep "netname"  > ${option}_${today}.txt
-            echo ${today} >> ${option}_${today}.txt;;
+            sort -V whois_yahoo_mnt.txt | grep "inetnum"  > ${choice}_${timestamp}.txt
+            echo ${timestamp} >> ${choice}_${timestamp}.txt;;
+            people) 
+            read -p "Enter your search: "  search
+            echo "Searching results for: $search "
+            sort whois_yahoo_mnt.txt | grep "$search"
+            grep "$search" whois_yahoo_mnt.txt > ${choice}_${timestamp}.txt
+            echo ${timestamp} >> ${choice}_${timestamp}.txt;;
         quit)
-            echo "script ended";
+            echo "program ended";
             break;;
      esac
 done
