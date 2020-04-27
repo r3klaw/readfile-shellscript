@@ -1,4 +1,7 @@
 #!/bin/sh
+
+filename="$1" 
+
 echo "user: "$USER
 
 var=$(date +"%FORMAT_STRING")
@@ -20,19 +23,17 @@ select choice in "${choices[@]}" ; do
     
     case $choice in
         netname) 
-            sort whois_yahoo_mnt.txt | grep "netname"
-            sort whois_yahoo_mnt.txt | grep "netname"  > ${choice}_${timestamp}.txt
-            echo ${timestamp} >> ${choice}_${timestamp}.txt;;  
+            sort ${filename} | grep "netname"  > ${choice}_${timestamp}.txt
+            echo "Scripted completed and exported as" ${choice}_${timestamp}.txt
+            echo "file created at:" ${timestamp} >> ${choice}_${timestamp}.txt;;  
         inetnum) 
-            sort -V whois_yahoo_mnt.txt | grep "inetnum"
-            sort -V whois_yahoo_mnt.txt | grep "inetnum"  > ${choice}_${timestamp}.txt
-            echo ${timestamp} >> ${choice}_${timestamp}.txt;;
+            sort -V ${filename} | grep "inetnum"  > ${choice}_${timestamp}.txt
+            echo "Scripted completed and exported as" ${choice}_${timestamp}.txt
+            echo "file created at:" ${timestamp} >> ${choice}_${timestamp}.txt;;
             people) 
-            read -p "Enter your search: "  search
-            echo "Searching results for: $search "
-            sort whois_yahoo_mnt.txt | grep "$search"
-            grep "$search" whois_yahoo_mnt.txt > ${choice}_${timestamp}.txt
-            echo ${timestamp} >> ${choice}_${timestamp}.txt;;
+            grep "person" ${filename} | sort | uniq > ${choice}_${timestamp}.txt
+            echo "Scripted completed and exported as" ${choice}_${timestamp}.txt
+            echo "file created at:" ${timestamp} >> ${choice}_${timestamp}.txt;;
         quit)
             echo "program ended";
             break;;
