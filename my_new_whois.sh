@@ -2,6 +2,8 @@
 
 filename="$1" 
 
+if [[ $filename ]]
+then
 echo "user: "$USER
 
 var=$(date +"%FORMAT_STRING")
@@ -18,7 +20,7 @@ choices=(
 
 PS3="Please choose an option between 1-4: "
 select choice in "${choices[@]}" ; do
-    [[ -n $choice ]] 
+    [[ -n $choice ]] ||
         echo "invalid input"
     
     case $choice in
@@ -39,5 +41,9 @@ select choice in "${choices[@]}" ; do
             break;;
      esac
 done
+
+else
+ echo "please Execute the script in this order: myscript.sh [inputFile] "
+fi
 
 
